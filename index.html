@@ -1,0 +1,124 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#18202b">
+  <title>Pathfinder Character Builder</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js"></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">PATHFINDER 2E REMASTER</p>
+      <h1>Character Builder</h1>
+      <p class="subtitle">
+        Build a character, advance levels, and save your progress.
+      </p>
+    </div>
+    <span id="engine-status" class="status">Loading Python…</span>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <h2>Character setup</h2>
+
+      <label for="workflow">Creation workflow</label>
+      <select id="workflow">
+        <option value="high-level">Create at a chosen level</option>
+        <option value="level-up">Level up an existing character</option>
+      </select>
+
+      <label for="character-name">Character name</label>
+      <input id="character-name" value="My Adventurer" maxlength="80">
+
+      <div id="level-up-fields" hidden>
+        <label for="current-level">Current level</label>
+        <input id="current-level" type="number" min="1" max="19" value="1">
+      </div>
+
+      <label for="level">Target level</label>
+      <input id="level" type="number" min="1" max="20" value="1">
+
+      <label for="ancestry">Ancestry</label>
+      <select id="ancestry">
+        <option value="Human">Human</option>
+        <option value="Dwarf">Dwarf</option>
+        <option value="Elf">Elf</option>
+      </select>
+
+      <label for="character-class">Class</label>
+      <select id="character-class">
+        <option value="Fighter">Fighter</option>
+        <option value="Wizard">Wizard</option>
+        <option value="Cleric">Cleric</option>
+        <option value="Rogue">Rogue</option>
+      </select>
+
+      <label for="background">Background</label>
+      <select id="background">
+        <option value="Scholar">Scholar</option>
+        <option value="Guard">Guard</option>
+        <option value="Artisan">Artisan</option>
+        <option value="Wanderer">Wanderer</option>
+      </select>
+
+      <h3>Ability scores</h3>
+      <p class="help">
+        Enter final ability scores for this starter version.
+        Full character creation and ability boosts are not implemented yet.
+      </p>
+
+      <div class="ability-grid">
+        <label>STR <input id="str" type="number" min="8" max="24" value="18"></label>
+        <label>DEX <input id="dex" type="number" min="8" max="24" value="12"></label>
+        <label>CON <input id="con" type="number" min="8" max="24" value="14"></label>
+        <label>INT <input id="int" type="number" min="8" max="24" value="10"></label>
+        <label>WIS <input id="wis" type="number" min="8" max="24" value="12"></label>
+        <label>CHA <input id="cha" type="number" min="8" max="24" value="10"></label>
+      </div>
+
+      <button id="calculate-button" class="primary">Calculate character</button>
+
+      <p id="form-message" class="help" role="status"></p>
+    </section>
+
+    <section class="panel summary-panel">
+      <h2>Character summary</h2>
+      <div id="character-summary" aria-live="polite">
+        <p>Load the rules engine, then calculate your character.</p>
+      </div>
+
+      <hr>
+
+      <h3>Save your character</h3>
+      <div class="button-row">
+        <button id="save-local-button">Save in browser</button>
+        <button id="load-local-button">Load browser save</button>
+      </div>
+
+      <div class="button-row">
+        <button id="export-button">Export JSON</button>
+        <button id="import-button">Import JSON</button>
+      </div>
+
+      <input id="import-file" type="file" accept=".json,application/json" hidden>
+      <p class="help">
+        Browser saves stay in this browser's local storage.
+        Export JSON to keep a portable backup.
+      </p>
+      <p id="save-message" class="help" role="status"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Independent fan-made tool. Not affiliated with Paizo.
+      This starter does not implement the complete Pathfinder ruleset.
+    </p>
+  </footer>
+</body>
+</html>
